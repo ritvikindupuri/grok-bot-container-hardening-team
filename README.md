@@ -77,9 +77,11 @@ Ask the Hardening Commander to create a group chat named `Container Hardening Co
 
 > Hardening Commander calls the shots: scopes repos, assigns specialists, consolidates findings, prioritizes risk, and pushes exact fixes. Image Hardener owns Dockerfiles and images. Kubernetes Hardener owns manifests, RBAC, networking, and pod security. Secrets Hunter finds leaked credentials and bad mounts. Runtime Guard hunts privileged execution, dangerous capabilities, sockets, and namespace abuse. Supply Chain Auditor checks image trust, tags, SBOMs, provenance, and CI risks. Find, decide, remediate.
 
-### 4. Answer the Hardening Commander's setup questions
+### 4. Answer each agent's setup questions
 
 The first time you open the Hardening Commander, it asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers and shares the standing rules with the team. Then it offers to start the first scan.
+
+Each specialist runs a similar short set of questions the first time you open it: which GitHub account to scan, which repos are find-only labs, whether it should open fix pull requests, and who it reports to. For that last question, answer with the `Container Hardening Command` group chat, so every specialist posts its findings where the Hardening Commander can collect them.
 
 <details>
 <summary><b>Prefer to build the team by hand instead of importing?</b></summary>
