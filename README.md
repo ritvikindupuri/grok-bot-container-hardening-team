@@ -71,22 +71,24 @@ Each agent is published as a public Grok Bot template. Open each link and import
 
 In your Grok Bot chat, ask any agent to "connect my GitHub." Approve the connection card that appears, and give Cursor access to the repositories you want checked. The agents use this connection to read code and open pull requests.
 
-### 3. Create the team group chat
+### 3. Set up the Hardening Commander and the group chat
 
-Ask the Hardening Commander to create a group chat named `Container Hardening Command` and add the five specialists. Then set the room description to:
+Open the Hardening Commander's chat. The first time, it asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers.
 
-> Hardening Commander calls the shots: scopes repos, assigns specialists, consolidates findings, prioritizes risk, and pushes exact fixes. Image Hardener owns Dockerfiles and images. Kubernetes Hardener owns manifests, RBAC, networking, and pod security. Secrets Hunter finds leaked credentials and bad mounts. Runtime Guard hunts privileged execution, dangerous capabilities, sockets, and namespace abuse. Supply Chain Auditor checks image trust, tags, SBOMs, provenance, and CI risks. Find, decide, remediate.
+Then ask it to create the team room, using this message:
 
-### 4. Answer each agent's setup questions
+> Create a group chat named "Container Hardening Command" with Image Hardener, Kubernetes Hardener, Secrets Hunter, Runtime Guard, and Supply Chain Auditor, and give it this description: Hardening Commander calls the shots: scopes repos, assigns specialists, consolidates findings, prioritizes risk, and pushes exact fixes. Image Hardener owns Dockerfiles and images. Kubernetes Hardener owns manifests, RBAC, networking, and pod security. Secrets Hunter finds leaked credentials and bad mounts. Runtime Guard hunts privileged execution, dangerous capabilities, sockets, and namespace abuse. Supply Chain Auditor checks image trust, tags, SBOMs, provenance, and CI risks. Find, decide, remediate.
 
-The first time you open the Hardening Commander, it asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers and shares the standing rules with the team. Then it offers to start the first scan.
+### 4. Answer each specialist's setup questions
 
-Each specialist runs a similar short set of questions the first time you open it: which GitHub account to scan, which repos are find-only labs, whether it should open fix pull requests, and who it reports to. For that last question, answer with the `Container Hardening Command` group chat, so every specialist posts its findings where the Hardening Commander can collect them.
+Open each specialist's chat once. Each one asks a short set of questions the first time: which GitHub account to scan, which repos are find-only labs, whether it should open fix pull requests, and who it reports to. Give the same answers you gave the Hardening Commander, and for "who do you report to," answer with the `Container Hardening Command` group chat. That way every specialist posts its findings where the Hardening Commander can collect them.
+
+Once all six have their answers, the team is ready. Go to [How to use it](#how-to-use-it) to start the first scan.
 
 <details>
 <summary><b>Prefer to build the team by hand instead of importing?</b></summary>
 
-Create six agents with these names and descriptions, then do steps 2 to 4 above. Replace `<your-github-username>` with your own username.
+Create six agents with these names and descriptions, then connect GitHub (step 2), create the group chat (the message in step 3), and send the standing rules below. Replace `<your-github-username>` with your own username.
 
 **Hardening Commander**
 
@@ -120,9 +122,11 @@ Then send the Hardening Commander these standing rules and ask it to remember th
 4. **Review and merge.** Open each pull request on GitHub, check the diff and CI results, and merge the ones you want.
 5. **Target a single repo or a single area** when you don't need a full scan:
    > Check only the Kubernetes manifests in `my-api-repo`.
+
    > Secrets Hunter, re-check `my-web-app` after the last merge.
 6. **Pause the team** at any time:
    > Take a break and don't do anything until I say resume.
+
    Every agent stands down, including any in-progress CI checks. Say "resume" to pick up where you left off.
 7. **Ask for status.** Ask the Hardening Commander "what's open?" for a list of open fix pull requests and anything still in progress.
 
