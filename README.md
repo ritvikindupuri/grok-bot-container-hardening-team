@@ -32,11 +32,11 @@ The team only works defensively. It reads your code and proposes fixes. It never
 1. **You ask for a security check.** You message the Hardening Commander (in its own chat or in the team group chat) with what to check, for example "scan all my repos" or "check the Kubernetes files in my API repo."
 2. **The Hardening Commander splits up the work.** It finds the repositories that contain container or Kubernetes files and assigns each specialist its part in the group chat.
 3. **Each specialist checks your GitHub repositories for one kind of risk.** They read files through Grok Bot's GitHub connection and don't change anything at this stage.
-   - **Image Hardener** checks Dockerfiles and images: base images, pinning by digest, running as a non-root user, multi-stage builds, health checks, and `.dockerignore`.
+   - **Image Hardener** checks Dockerfiles and images: base images, pinning by digest, running as a non-root user, multi-stage builds, package hygiene (pinned package versions, cleaned caches, no extra packages), health checks, and `.dockerignore`.
    - **Kubernetes Hardener** checks manifests, Helm, and kustomize: security contexts, RBAC permissions, network policies, privileged pods, host access, resource limits, and ingress.
-   - **Secrets Hunter** looks for passwords, keys, and tokens left in code, environment variables, images, or mounts. Values are always redacted.
+   - **Secrets Hunter** looks for passwords, keys, and tokens left in code, environment variables, build arguments, images, or mounts, plus leaks through missing `.dockerignore` or `.gitignore` files. Values are always redacted.
    - **Runtime Guard** looks for containers running with too much power: privileged mode, dangerous Linux capabilities, a mounted Docker socket, missing seccomp or AppArmor, and shared host namespaces.
-   - **Supply Chain Auditor** checks where images come from: unpinned tags such as `:latest`, missing image signing, missing SBOMs (software bills of materials), and risky CI build-and-push steps.
+   - **Supply Chain Auditor** checks where images and their dependencies come from: unpinned tags such as `:latest`, unpinned build-time downloads (such as `curl | sh`, `npm install` without a lockfile, or GitHub Actions not pinned to a commit), images that are never scanned, missing signing, missing SBOMs (software bills of materials) or provenance, and risky CI build-and-push steps.
 4. **Findings come back to the Hardening Commander.** Each one is posted in the group chat as *Vulnerability | Risk | Severity (and why) | Exact fix*.
 5. **Serious problems get a fix.** For each High or Critical finding, the Hardening Commander (or the specialist it assigns) launches a Cursor cloud agent. The cloud agent creates a branch, applies the fix, and opens a draft pull request. Medium and lower findings are only reported.
 6. **You review the fix.** You read the pull request and decide whether to merge it.
@@ -48,7 +48,7 @@ The team only works defensively. It reads your code and proposes fixes. It never
 - **Cursor cloud agents** make the code changes on a branch and open the pull requests.
 - **The files being checked:** Docker and Containerfiles, Docker Compose, Kubernetes manifests, Helm charts, kustomize, and GitHub Actions workflows.
 - **Supply chain tools used in the fixes:** `crane` to look up image digests for pinning, plus Trivy (vulnerability scanning), Syft (SBOM generation), and Cosign (image signing) in a GitHub Actions scan gate.
-- **Kubernetes controls used in the fixes:** Pod Security Standards, security contexts, NetworkPolicy, RBAC, and seccomp.
+- **Kubernetes controls used in the fixes:** Pod Security Standards, security contexts, NetworkPolicy, RBAC, seccomp, and Kyverno admission policies.
 
 ## Set it up in your own Grok Bot
 
@@ -81,7 +81,7 @@ Then ask it to create the team room, using this message:
 
 ### 4. Answer each specialist's setup questions
 
-Open each specialist's chat once. Each one asks a short set of questions the first time: which GitHub account to scan, which repos are find-only labs, whether it should open fix pull requests, and who it reports to. Give the same answers you gave the Hardening Commander, and for "who do you report to," answer with the `Container Hardening Command` group chat. That way every specialist posts its findings where the Hardening Commander can collect them.
+Open each specialist's chat once. Each one asks a short set of questions the first time. They all ask which GitHub account to scan, which repos are find-only labs, and who they report to (some word this as whether they work with a team lead). Some also ask whether they should open fix pull requests, and one may offer to let you watch its work live. Give the same answers you gave the Hardening Commander, and when asked who it reports to or about a team lead, answer with the `Container Hardening Command` group chat. That way every specialist posts its findings where the Hardening Commander can collect them.
 
 Once all six have their answers, the team is ready. Go to [How to use it](#how-to-use-it) to start the first scan.
 
@@ -127,7 +127,7 @@ Then send the Hardening Commander these standing rules and ask it to remember th
 6. **Pause the team** at any time:
    > Take a break and don't do anything until I say resume.
 
-   Every agent stands down, including any in-progress CI checks. Say "resume" to pick up where you left off.
+   Every agent stands down and starts no new work or pull requests. GitHub Actions runs that have already started keep running on GitHub. Say "resume" to pick up where you left off.
 7. **Ask for status.** Ask the Hardening Commander "what's open?" for a list of open fix pull requests and anything still in progress.
 
 ## Sample findings
