@@ -69,11 +69,11 @@ Each agent is published as a public Grok Bot template. Open each link and import
 
 ### 2. Connect GitHub
 
-In your Grok Bot chat, ask any agent to "connect my GitHub." Approve the connection card that appears, and give Cursor access to the repositories you want checked. The agents use this connection to read code, and the Cursor cloud agents use it to push fix branches and open pull requests, so the repositories you want fixed need write access, not just read access. Also allow access to workflows (GitHub Actions files under `.github/workflows/`). GitHub treats those separately from normal code, and without that permission any fix that adds a CI scan gate is rejected when it's pushed, even though other fixes still go through. You only connect GitHub once; all six agents share the connection.
+Open the Hardening Commander's chat and ask it to "connect my GitHub." (If it starts with its setup questions first, that's fine. Its first question is about GitHub, and it will walk you through connecting.) Approve the connection card that appears, and give Cursor access to the repositories you want checked. The agents use this connection to read code, and the Cursor cloud agents use it to push fix branches and open pull requests, so the repositories you want fixed need write access, not just read access. Also allow access to workflows (GitHub Actions files under `.github/workflows/`). GitHub treats those separately from normal code, and without that permission any fix that adds a CI scan gate is rejected when it's pushed, even though other fixes still go through. You only connect GitHub once; all six agents share the connection.
 
 ### 3. Set up the Hardening Commander and the group chat
 
-Open the Hardening Commander's chat. The first time, it asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers.
+In the same Hardening Commander chat, answer its first-run setup questions. It asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers.
 
 Then ask it to create the team room, using this message:
 
