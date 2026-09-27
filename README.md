@@ -111,6 +111,10 @@ Send these rules to the Hardening Commander (edit them to fit you) and ask it to
    Every agent stands down, including any in-progress CI checks. Say "resume" to pick up where you left off.
 7. **Ask for status.** Ask the Hardening Commander "what's open?" for a list of open fix pull requests and anything still in progress.
 
+## Sample findings
+
+To see what the team's reports actually look like, read [SAMPLE_FINDINGS.md](SAMPLE_FINDINGS.md). It has real screenshots from the group chat: Runtime Guard's runtime re-check across every repo, and Kubernetes Hardener and Supply Chain Auditor reporting the fix pull requests they opened.
+
 ## Limitations
 
 - The team reads code and configuration. It does not scan running clusters or live containers.
