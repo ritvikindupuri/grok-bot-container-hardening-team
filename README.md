@@ -54,6 +54,21 @@ The team only works defensively. It reads your code and proposes fixes. It never
 
 You need a Grok Bot account, a GitHub account, and access to Cursor cloud agents.
 
+### Fastest way: import the team
+
+Each agent is published as a public Grok Bot template. Open each link below and import it into your own Grok Bot. Every template brings that agent's role, its rules, and the finding format, and the Hardening Commander walks you through a short getting-started chat the first time you open it.
+
+| Agent | What it does | Template |
+|-------|--------------|----------|
+| Hardening Commander | Team lead. Splits up the work and decides what gets fixed. | [Import](https://x.ai/bot/JBtMhvtYo2R1aky5s6xXK) |
+| Image Hardener | Checks Dockerfiles and container images. | [Import](https://x.ai/bot/441XDiyC7uaji-U66ci-3) |
+| Kubernetes Hardener | Checks Kubernetes settings, permissions, and networking. | [Import](https://x.ai/bot/IVmcj7aFV-wtMA19P3G4Q) |
+| Secrets Hunter | Finds passwords and keys left in code or images. | [Import](https://x.ai/bot/LkzOnNaqM1tuEYZTFwzG_) |
+| Runtime Guard | Finds containers running with too much power. | [Import](https://x.ai/bot/5OSZJ5JKxsiThQ0Nnr-rJ) |
+| Supply Chain Auditor | Checks where images come from and whether they're verified. | [Import](https://x.ai/bot/qbxHfvaOU71YTY5-nZSAt) |
+
+After importing all six, connect GitHub (step 1 below), then do steps 4 and 5 to create the group chat and set the standing rules. The steps below also work if you'd rather build the team by hand.
+
 ### 1. Connect GitHub
 
 In your Grok Bot chat, ask any agent to "connect my GitHub." Approve the connection card that appears, and give Cursor access to the repositories you want checked. The agents use this connection to read code and open pull requests.
