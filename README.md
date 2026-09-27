@@ -52,11 +52,11 @@ The team only works defensively. It reads your code and proposes fixes. It never
 
 ## Set it up in your own Grok Bot
 
-You need a Grok Bot account, a GitHub account, and access to Cursor cloud agents.
+You need a Grok Bot account, a GitHub account, and access to Cursor cloud agents. Setup takes four steps.
 
-### Fastest way: import the team
+### 1. Import the six agents
 
-Each agent is published as a public Grok Bot template. Open each link below and import it into your own Grok Bot. Every template brings that agent's role, its rules, and the finding format, and the Hardening Commander walks you through a short getting-started chat the first time you open it.
+Each agent is published as a public Grok Bot template. Open each link and import it into your Grok Bot. A template brings the agent's name, role, rules, and finding format with it, so there's nothing to type in by hand.
 
 | Agent | What it does | Template |
 |-------|--------------|----------|
@@ -67,23 +67,29 @@ Each agent is published as a public Grok Bot template. Open each link below and 
 | Runtime Guard | Finds containers running with too much power. | [Import](https://x.ai/bot/5OSZJ5JKxsiThQ0Nnr-rJ) |
 | Supply Chain Auditor | Checks where images come from and whether they're verified. | [Import](https://x.ai/bot/qbxHfvaOU71YTY5-nZSAt) |
 
-After importing all six, connect GitHub (step 1 below), then do steps 4 and 5 to create the group chat and set the standing rules. The steps below also work if you'd rather build the team by hand.
-
-### 1. Connect GitHub
+### 2. Connect GitHub
 
 In your Grok Bot chat, ask any agent to "connect my GitHub." Approve the connection card that appears, and give Cursor access to the repositories you want checked. The agents use this connection to read code and open pull requests.
 
-### 2. Create the team lead
+### 3. Create the team group chat
 
-Create a new agent and give it this name and description.
+Ask the Hardening Commander to create a group chat named `Container Hardening Command` and add the five specialists. Then set the room description to:
 
-- **Name:** `Hardening Commander`
+> Hardening Commander calls the shots: scopes repos, assigns specialists, consolidates findings, prioritizes risk, and pushes exact fixes. Image Hardener owns Dockerfiles and images. Kubernetes Hardener owns manifests, RBAC, networking, and pod security. Secrets Hunter finds leaked credentials and bad mounts. Runtime Guard hunts privileged execution, dangerous capabilities, sockets, and namespace abuse. Supply Chain Auditor checks image trust, tags, SBOMs, provenance, and CI risks. Find, decide, remediate.
+
+### 4. Answer the Hardening Commander's setup questions
+
+The first time you open the Hardening Commander, it asks a few questions one at a time: your GitHub username, whether any of your repos are intentionally vulnerable labs (those are scanned but never changed), and whether it should open fix pull requests for High and Critical findings on its own or check with you first. It saves your answers and shares the standing rules with the team. Then it offers to start the first scan.
+
+<details>
+<summary><b>Prefer to build the team by hand instead of importing?</b></summary>
+
+Create six agents with these names and descriptions, then do steps 2 to 4 above. Replace `<your-github-username>` with your own username.
+
+**Hardening Commander**
+
 - **Description:**
   > Leads the container and Kubernetes hardening team. Assigns full scans across every repo in my GitHub account that has Dockerfiles, Compose, Kubernetes/Helm, or CI image builds. Consolidates specialist findings, decides what gets fixed, and opens fix pull requests for High and Critical findings through Cursor cloud agents. Commands Image Hardener, Kubernetes Hardener, Secrets Hunter, Runtime Guard, and Supply Chain Auditor. Defensive work only: images, Kubernetes, runtimes, secrets, and supply chain.
-
-### 3. Create the five specialists
-
-Create five more agents with these names and descriptions. Replace `<your-github-username>` with your own username.
 
 | Name | Description |
 |------|-------------|
@@ -93,23 +99,15 @@ Create five more agents with these names and descriptions. Replace `<your-github
 | `Runtime Guard` | Searches every `<your-github-username>` repo with Compose or runtime configs for privileged mode, dangerous capabilities, missing seccomp or AppArmor, docker.sock mounts, and shared namespaces. Defensive analysis only, no exploit code. Reports to Hardening Commander with severity, location, risk, and the exact lock-down. |
 | `Supply Chain Auditor` | Searches every `<your-github-username>` repo that builds or pulls images for unpinned tags, unsigned images, missing SBOMs or provenance, and risky CI build-and-push steps. Reports to Hardening Commander with severity, location, risk, and the exact fix (pin, sign, scan, or add CI gates). |
 
-Optionally, give each agent its own icon so the team is easy to tell apart. This project uses a blue pebble for the Hardening Commander, a cyan triangle for Image Hardener, a cyan cloud for Kubernetes Hardener, a red capsule for Secrets Hunter, a violet hexagon for Runtime Guard, and an orange pebble for Supply Chain Auditor.
-
-### 4. Create the team group chat
-
-Ask the Hardening Commander to create a group chat named `Container Hardening Command` and add all five specialists. Then set the room description to:
-
-> Hardening Commander calls the shots: scopes repos, assigns specialists, consolidates findings, prioritizes risk, and pushes exact fixes. Image Hardener owns Dockerfiles and images. Kubernetes Hardener owns manifests, RBAC, networking, and pod security. Secrets Hunter finds leaked credentials and bad mounts. Runtime Guard hunts privileged execution, dangerous capabilities, sockets, and namespace abuse. Supply Chain Auditor checks image trust, tags, SBOMs, provenance, and CI risks. Find, decide, remediate.
-
-### 5. Give the team its standing rules
-
-Send these rules to the Hardening Commander (edit them to fit you) and ask it to remember them and share them with the team:
+Then send the Hardening Commander these standing rules and ask it to remember them and share them with the team:
 
 - Every finding uses the format *Vulnerability | Risk | Severity (and why) | Exact fix*.
 - Open fix pull requests only for High and Critical findings. Report Medium and lower.
 - These repositories are intentionally vulnerable labs. Scan and report them, but never change them: `<list your lab repos, or say "none">`.
 - The Hardening Commander decides what gets fixed; specialists work it out among themselves and don't ask me to approve each step.
 - Never paste real secret values. Redact them.
+
+</details>
 
 ## How to use it
 
