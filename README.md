@@ -20,6 +20,20 @@ The team only works defensively. It reads your code and proposes fixes. It never
 - **Lab-safe.** Repositories you mark as intentionally vulnerable (for example, security training labs) are scanned and reported, but never changed.
 - **Pause and resume.** Tell the group chat to stand down and every agent stops until you say resume.
 
+## Safeguards
+
+These rules keep the team safe to run against real repositories. Each one is also described where it applies elsewhere in this README.
+
+- **Defensive only.** The team reads code and configuration and proposes fixes. It never attacks live systems or clusters and never writes exploit code.
+- **Read-only while scanning.** Specialists only read files while they check your repositories. Nothing changes until a fix is opened as a pull request ([How it works](#how-it-works-step-by-step), step 3).
+- **Secrets stay redacted.** Real passwords, keys, and tokens are never pasted into chat, findings, or pull requests.
+- **Fixes only for serious findings.** Only High and Critical findings get fix pull requests. Medium and lower findings are reported only.
+- **Draft pull requests, human merge.** Every fix arrives as a draft pull request on its own branch, and nothing is merged without your review.
+- **Lab repositories are never changed.** Repositories you mark as intentionally vulnerable labs are scanned and reported, but never get pull requests ([setup step 3](#3-set-up-the-hardening-commander-and-the-group-chat)).
+- **Pause at any time.** Telling the team to stand down stops every agent from starting new work or pull requests until you say resume ([How to use it](#how-to-use-it), step 6).
+- **One consistent report format.** Every finding states the vulnerability, the risk, the severity with a reason, and the exact fix, so you can check the reasoning before accepting a change.
+- **Grok Bot approval checks.** Grok Bot's built-in approval check can stop risky actions, such as pushing code, and ask you to approve them first. This is a Grok Bot platform feature, not a team rule, and it's controlled in your Grok Bot settings.
+
 ## Architecture
 
 <p align="center">
