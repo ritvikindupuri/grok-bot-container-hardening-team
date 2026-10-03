@@ -162,4 +162,4 @@ To see what the team's reports actually look like, read [SAMPLE_FINDINGS.md](SAM
 
 - The team reads code and configuration. It does not scan running clusters or live containers.
 - Severity ratings are the agents' judgment. Review each pull request before merging.
-- How many fixes can run at once depends on your Cursor cloud agent limit. The Hardening Commander queues work when that limit is reached.
+- How many fixes can run at once depends on your Cursor cloud agent limit. If you have many High or Critical findings, some fixes may have to wait until earlier cloud agents finish.
