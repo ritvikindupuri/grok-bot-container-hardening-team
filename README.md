@@ -6,7 +6,7 @@ A team of six Grok Bot agents that checks your GitHub repositories for container
 
 Container setups tend to pick up the same risky mistakes: images that run as root, passwords copied into images, containers given access to the host, Kubernetes workloads with no security settings, and base images that nobody pinned or verified. Checking for all of that by hand across many repositories is slow, and it's easy to miss something.
 
-This project splits that job across a small team of Grok Bot agents. One lead agent, the **Hardening Commander**, takes your request, divides the work, and decides what gets fixed. Five specialist agents each look for one kind of risk. They talk to each other in a shared Grok Bot group chat. Every finding is reported the same way (what the problem is, why it matters, how severe it is, and the exact fix). Serious problems are fixed through draft pull requests that you review before anything is merged.
+This project splits that job across a small team of Grok Bot agents. One lead agent, the **Hardening Commander**, takes your request, divides the work, and decides what gets fixed. Five specialist agents each look for one kind of risk. They talk to each other in a shared Grok Bot group chat. Every finding is reported the same way (what the problem is, why it matters, how severe it is, and the exact fix). Serious problems are fixed through pull requests that you review before anything is merged.
 
 The team only works defensively. It reads your code and proposes fixes. It never attacks live systems, and it never pastes real secret values into chat.
 
@@ -15,7 +15,7 @@ The team only works defensively. It reads your code and proposes fixes. It never
 - **Six agents with clear roles.** A team lead plus specialists for images, Kubernetes, secrets, runtime settings, and the software supply chain.
 - **Whole-account scanning.** The team finds every repository in your GitHub account that has Dockerfiles, Docker Compose files, Kubernetes manifests, Helm charts, or CI jobs that build images.
 - **One consistent report format.** Each finding lists the vulnerability, the risk, the severity with a reason, and the exact fix.
-- **Fixes as pull requests.** High and Critical findings are fixed by Cursor cloud agents, which open draft pull requests on the affected repository. Medium and lower findings are reported only.
+- **Fixes as pull requests.** High and Critical findings are fixed by Cursor cloud agents, which open pull requests (usually as drafts) on the affected repository. Medium and lower findings are reported only.
 - **You stay in control.** Nothing is merged without your review.
 - **Lab-safe.** Repositories you mark as intentionally vulnerable (for example, security training labs) are scanned and reported, but never changed.
 - **Pause and resume.** Tell the group chat to stand down and every agent stops until you say resume.
@@ -28,7 +28,7 @@ These rules keep the team safe to run against real repositories. Each one is als
 - **Read-only while scanning.** Specialists only read files while they check your repositories. Nothing changes until a fix is opened as a pull request ([How it works](#how-it-works-step-by-step), step 3).
 - **Secrets stay redacted.** Real passwords, keys, and tokens are never pasted into chat, findings, or pull requests.
 - **Fixes only for serious findings.** Only High and Critical findings get fix pull requests. Medium and lower findings are reported only.
-- **Draft pull requests, human merge.** Every fix arrives as a draft pull request on its own branch, and nothing is merged without your review.
+- **Pull requests, human merge.** Every fix arrives as a pull request on its own branch, usually as a draft. The agents never merge anything; you review and merge. This is a rule the team follows, not a GitHub setting, so if you want GitHub itself to block merges, turn on branch protection for your repositories.
 - **Lab repositories are never changed.** Repositories you mark as intentionally vulnerable labs are scanned and reported, but never get pull requests ([setup step 3](#3-set-up-the-hardening-commander-and-the-group-chat)).
 - **Pause at any time.** Telling the team to stand down stops every agent from starting new work or pull requests until you say resume ([How to use it](#how-to-use-it), step 6).
 - **One consistent report format.** Every finding states the vulnerability, the risk, the severity with a reason, and the exact fix, so you can check the reasoning before accepting a change.
@@ -52,7 +52,7 @@ These rules keep the team safe to run against real repositories. Each one is als
    - **Runtime Guard** looks for containers running with too much power: privileged mode, dangerous Linux capabilities, a mounted Docker socket, missing seccomp or AppArmor, and shared host namespaces.
    - **Supply Chain Auditor** checks where images and their dependencies come from: unpinned tags such as `:latest`, unpinned build-time downloads (such as `curl | sh`, `npm install` without a lockfile, or GitHub Actions not pinned to a commit), images that are never scanned, missing signing, missing SBOMs (software bills of materials) or provenance, and risky CI build-and-push steps.
 4. **Findings come back to the Hardening Commander.** Each one is posted in the group chat as *Vulnerability | Risk | Severity (and why) | Exact fix*.
-5. **Serious problems get a fix.** For each High or Critical finding, the Hardening Commander (or the specialist it assigns) launches a Cursor cloud agent. The cloud agent creates a branch, applies the fix, and opens a draft pull request. Medium and lower findings are only reported.
+5. **Serious problems get a fix.** For each High or Critical finding, the Hardening Commander (or the specialist it assigns) launches a Cursor cloud agent. The cloud agent creates a branch, applies the fix, and opens a pull request, usually as a draft. Medium and lower findings are only reported.
 6. **You review the fix.** You read the pull request and decide whether to merge it.
 
 ### How the team coordinates and settles conflicts
@@ -142,7 +142,7 @@ Then send the Hardening Commander these standing rules and ask it to remember th
 1. **Start a full scan.** In the `Container Hardening Command` group chat, write something like:
    > Scan every repo in my GitHub account that has containers or Kubernetes files, and report findings.
 2. **Watch the reports come in.** Each specialist posts its findings in the group chat in the standard format. The Hardening Commander collects them and posts a prioritized summary.
-3. **Let the fixes open.** For High and Critical findings, the team launches cloud agents that open draft pull requests. Each pull request description repeats the finding, so you can see why the change was made.
+3. **Let the fixes open.** For High and Critical findings, the team launches cloud agents that open pull requests, usually as drafts. Each pull request description explains what it changes and why, and the full finding (with its severity) is in the group chat.
 4. **Review and merge.** Open each pull request on GitHub, check the diff and CI results, and merge the ones you want.
 5. **Target a single repo or a single area** when you don't need a full scan:
    > Check only the Kubernetes manifests in `my-api-repo`.
