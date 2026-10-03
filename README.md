@@ -57,13 +57,13 @@ These rules keep the team safe to run against real repositories. Each one is als
 
 ### How the team coordinates and settles conflicts
 
-Five specialists working on the same repositories will sometimes overlap or disagree. The Hardening Commander handles that in the group chat, where every decision and the reason for it stays visible.
+Five specialists working on the same repositories will sometimes overlap or disagree. The Hardening Commander handles that in the group chat, where every decision and the reason for it stays visible. These are the patterns it followed in a real run. They come from the Commander's judgment as team lead, not from code that enforces them.
 
 - **One owner per file area.** When two specialists need to change the same lines, for example both want to edit the same `FROM` line in a Dockerfile, the Commander assigns the change to one pull request. The other specialist hands over its part (such as an image digest) instead of opening a second pull request that would conflict.
-- **Peer review before a fix is marked ready.** A specialist with nothing to fix in a repository reviews the others' fixes. If the review finds a gap, such as a fix that still leaves a dangerous path open through another route, the owning specialist fixes it on the same pull request before the Commander marks it ready.
+- **Peer review before a fix is marked ready.** When a specialist has nothing to fix in a repository, the Commander can assign it to review the others' fixes. If the review finds a gap, such as a fix that still leaves a dangerous path open through another route, the owning specialist fixes it on the same pull request before the Commander marks it ready.
 - **Conflicting recommendations get a decision with reasons.** When specialists recommend fixes that don't work together, for example one change would break a protection another pull request already adds, each states its case in the group chat. The Commander weighs the risk of each option, picks one, records why, and moves the rejected option to the follow-up list if it's still worth revisiting.
 - **Overlapping pull requests get a merge order.** When two fix pull requests touch the same part of a file, the Commander sets a merge order and test-merges them together so the order works without conflicts.
-- **Severity is the tiebreaker for scope.** If specialists rate the same issue differently, the Commander sets the final rating. Only High and Critical findings get pull requests, and the rest go on a follow-up list.
+- **Scope stays fixed.** Only High and Critical findings get pull requests. Medium and lower findings, and any options the Commander rejected, go on a follow-up list in its final summary.
 
 ## Tech stack
 
