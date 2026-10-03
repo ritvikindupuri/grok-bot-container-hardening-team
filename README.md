@@ -143,7 +143,7 @@ Then send the Hardening Commander these standing rules and ask it to remember th
    > Scan every repo in my GitHub account that has containers or Kubernetes files, and report findings.
 2. **Watch the reports come in.** Each specialist posts its findings in the group chat in the standard format. The Hardening Commander collects them and posts a prioritized summary.
 3. **Let the fixes open.** For High and Critical findings, the team launches cloud agents that open pull requests, usually as drafts. Each pull request description explains what it changes and why, and the full finding (with its severity) is in the group chat.
-4. **Review and merge.** Open each pull request on GitHub, check the diff and CI results, and merge the ones you want.
+4. **Review and merge.** Open each pull request on GitHub, check the diff (and CI results, if the repository has CI), and merge the ones you want.
 5. **Target a single repo or a single area** when you don't need a full scan:
    > Check only the Kubernetes manifests in `my-api-repo`.
 
