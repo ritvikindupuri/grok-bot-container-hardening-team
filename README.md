@@ -71,8 +71,8 @@ Five specialists working on the same repositories will sometimes overlap or disa
 - **GitHub connection in Grok Bot** lets the agents search and read repositories, pull requests, and CI runs.
 - **Cursor cloud agents** make the code changes on a branch and open the pull requests.
 - **The files being checked:** Docker and Containerfiles, Docker Compose, Kubernetes manifests, Helm charts, kustomize, and GitHub Actions workflows.
-- **Supply chain tools used in the fixes:** `crane` to look up image digests for pinning, plus Trivy (vulnerability scanning), Syft (SBOM generation), and Cosign (image signing) in a GitHub Actions scan gate.
-- **Kubernetes controls used in the fixes:** Pod Security Standards, security contexts, NetworkPolicy, RBAC, seccomp, and Kyverno admission policies.
+- **Supply chain tools used in the fixes:** `crane` to look up image digests for pinning. Trivy (vulnerability scanning), Syft (SBOM generation), and Cosign (image signing) are set up in a GitHub Actions gate in one open pull request. Trivy has run and blocked a vulnerable image. The SBOM and signing steps haven't run yet, because they wait for the scan to pass and signing needs secrets the repository doesn't have.
+- **Kubernetes controls used in the fixes (in open pull requests, not yet merged or deployed):** Pod Security Standards, security contexts, NetworkPolicy, RBAC, seccomp, and Kyverno admission policies.
 
 ## Set it up in your own Grok Bot
 
